@@ -1,0 +1,41 @@
+commit e3ae39144d5b456085c9c1b34a89d097d457cffb
+Author: Andrew Morrow <acm@mongodb.com>
+Date:   Mon May 14 17:45:20 2018 -0400
+
+    SERVER-35077 Add armv7-a SDK builder
+
+diff --git a/src/mongo/util/procparser.cpp b/src/mongo/util/procparser.cpp
+index af7a81fc7a..755be41cb8 100644
+--- a/src/mongo/util/procparser.cpp
++++ b/src/mongo/util/procparser.cpp
+@@ -278,7 +278,7 @@ Status parseProcStat(const std::vector<StringData>& keys,
+                     value = 0;
+                 }
+ 
+-                builder->appendNumber(key, value);
++                builder->appendNumber(key, static_cast<long long>(value));
+             }
+         }
+     }
+@@ -383,10 +383,10 @@ Status parseProcMemInfo(const std::vector<StringData>& keys,
+                     keyWithSuffix.append("_kb");
+                 }
+ 
+-                builder->appendNumber(keyWithSuffix, value);
++                builder->appendNumber(keyWithSuffix, static_cast<long long>(value));
+             } else {
+ 
+-                builder->appendNumber(key, value);
++                builder->appendNumber(key, static_cast<long long>(value));
+             }
+         }
+     }
+@@ -614,7 +614,7 @@ Status parseProcDiskStats(const std::vector<StringData>& disks,
+                 BSONObjBuilder sub(builder->subobjStart(disk));
+ 
+                 for (size_t index = 0; index < stats.size() && index < kDiskFieldCount; ++index) {
+-                    sub.appendNumber(kDiskFields[index], stats[index]);
++                    sub.appendNumber(kDiskFields[index], static_cast<long long>(stats[index]));
+                 }
+ 
+                 sub.doneFast();

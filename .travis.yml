@@ -1,0 +1,26 @@
+language: nix
+nix: 2.2.1
+git:
+  submodules_depth: 2
+
+script: |
+  (
+  set -euxo pipefail
+
+  # print something so Travis doesn't kill us
+  while sleep 5m; do echo "=====[ $SECONDS seconds, nix still building... ]====="; done &
+
+  # load the cache
+  nix-env -iA cachix -f https://cachix.org/api/v1/install
+  cachix use cross-armed
+
+  # login if we have permission
+  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
+    cachix authtoken "$CACHIX_AUTH_TOKEN"
+  fi
+
+  ./update-cachix.sh
+
+  # kill the background process
+  kill %1
+  )

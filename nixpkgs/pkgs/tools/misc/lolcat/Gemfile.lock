@@ -1,0 +1,19 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    lolcat (99.9.69)
+      manpages (~> 0.6.1)
+      optimist (~> 3.0.0)
+      paint (~> 2.0.0)
+    manpages (0.6.1)
+    optimist (3.0.0)
+    paint (2.0.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  lolcat
+
+BUNDLED WITH
+   1.16.3

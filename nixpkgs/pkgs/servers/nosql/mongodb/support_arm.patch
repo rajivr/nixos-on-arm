@@ -1,0 +1,19 @@
+commit e3ae39144d5b456085c9c1b34a89d097d457cffb
+Author: Andrew Morrow <acm@mongodb.com>
+Date:   Mon May 14 17:45:20 2018 -0400
+
+    SERVER-35077 Add armv7-a SDK builder
+
+diff --git a/src/mongo/platform/pause.h b/src/mongo/platform/pause.h
+index 46df1466cc..5003de534a 100644
+--- a/src/mongo/platform/pause.h
++++ b/src/mongo/platform/pause.h
+@@ -55,7 +55,7 @@
+ /* ori 0,0,0 is the PPC64 noop instruction */
+ #define MONGO_YIELD_CORE_FOR_SMT() __asm__ volatile("ori 0,0,0" ::: "memory")
+ 
+-#elif defined(__aarch64__)
++#elif defined(__aarch64__) || defined(__arm__)
+ 
+ #define MONGO_YIELD_CORE_FOR_SMT() __asm__ volatile("yield" ::: "memory")
+ 
